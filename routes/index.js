@@ -1,8 +1,14 @@
-const express = require('express');
-const router = express.Router();
+module.exports = app => {
+    app.use('/api/establishments', require('../api/establishments'));
 
-router.get('/', (req, res) => {
-    res.json('Hello World!');
-});
+    app.use((req, res) => {
+        res.sendStatus(404);
+    });
 
-module.exports = router;
+    app.use((err, req, res) => {
+        res.locals.message = err.message;
+        res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+        res.sendStatus(err.status || 500);
+    });
+};

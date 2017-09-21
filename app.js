@@ -1,30 +1,29 @@
 const express = require('express');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
+const helmet = require('helmet');
+const http = require('http');
+const mongoose = require('mongoose');
+mongoose.Promise = Promise;
 
-const index = require('./routes/index');
+const config = require('./config/environment');
+const routes = require('./routes');
 
 const app = express();
 
 app.use(logger('dev'));
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', index);
+routes(app);
 
-app.use((req, res, next) => {
-    const err = new Error('Not Found');
-    err.status = 404;
+const server = http.createServer(app);
 
-    next(err);
-});
-
-app.use((err, req, res) => {
-    res.locals.message = err.message;
-    res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-    res.status(err.status || 500);
-    res.render('error');
+mongoose.connect(config.mongo.uri, config.mongo.options).then(() => {
+    server.listen(config.port, config.ip, () => {
+        console.log(`Express server listening on ${ config.port }, in ${ app.get('env') } mode.`);
+    });
 });
 
 module.exports = app;
