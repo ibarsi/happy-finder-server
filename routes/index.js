@@ -1,14 +1,14 @@
+const NotFound = require('../errors/not-found');
+
 module.exports = app => {
     app.use('/api/establishments', require('../api/establishments'));
 
-    app.use((req, res) => {
-        res.sendStatus(404);
-    });
+    app.use((req, res, next) => next(new NotFound()));
 
-    app.use((err, req, res) => {
+    app.use((err, req, res, next) => {
         res.locals.message = err.message;
         res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-        res.sendStatus(err.status || 500);
+        res.status(err.statusCode || 500).json(err);
     });
 };
