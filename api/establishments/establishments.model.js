@@ -12,16 +12,13 @@ const EstablishmentSchema = new Schema({
     name: String,
     type: { type: String, enum: Object.values(ESTABLISHMENT_TYPES) },
     address: {
-        coords: {
-            lat: Number,
-            lng: Number
-        },
+        coords: Array,
         formatted: String,
         google: Schema.Types.Mixed
     },
-    rating: { type: Number, min: 0, max: 5 },
-    distance: { type: Number, min: 0 }, // Kilometers
     deals: [ DealSchema ]
 });
+
+EstablishmentSchema.index({ 'address.coords': '2d' });
 
 module.exports = mongoose.model('Establishment', EstablishmentSchema);

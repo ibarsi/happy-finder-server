@@ -7,7 +7,7 @@ const searchPlacesByKeyword = async (coords, keyword) => {
     const options = [
         `key=${ config.googleApiKey }`,
         `location=${ coords.lat },${ coords.lng }`,
-        'radius=500',
+        'radius=5000',
         `keyword=${ keyword }`
     ];
     const url = `${ base }?${ options.join('&') }`;
