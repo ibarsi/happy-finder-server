@@ -9,25 +9,29 @@ exports.index = async (req, res, next) => {
             distance: 1
         }
     };
-    let query = {};
+
+    const aggregateQuery = [];
 
     try {
         if (req.query.lat && req.query.lng) {
-            query = {
+            const query = {
                 $geoNear: {
-                    near: [ Number(req.query.lat), Number(req.query.lng) ],
+                    near: {
+                        type: 'Point',
+                        coordinates: [ Number(req.query.lng), Number(req.query.lat) ]
+                    },
                     distanceField: 'distance',
-                    distanceMultiplier: 6371,
+                    distanceMultiplier: 1 / 1000, // Ms -> KMs
+                    maxDistance: 5000, // 5km
                     spherical: true,
-                    num: 5000
+                    num: 10
                 }
             };
+
+            aggregateQuery.push(query);
         }
 
-        const aggregateQuery = [
-            query,
-            projection
-        ];
+        aggregateQuery.push(projection);
 
         const establishments = await Establishment.collection.aggregate(aggregateQuery).get();
 
