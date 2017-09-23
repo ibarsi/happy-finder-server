@@ -1,14 +1,18 @@
-const NotFound = require('../errors/not-found');
+const { NotFound, InternalError } = require('../errors');
 
 module.exports = app => {
     app.use('/api/establishments', require('../api/establishments'));
 
     app.use((req, res, next) => next(new NotFound()));
 
-    app.use((err, req, res, next) => {
-        res.locals.message = err.message;
-        res.locals.error = req.app.get('env') === 'development' ? err : {};
+    app.use((error, req, res, next) => {
+        res.locals.message = error.message;
+        res.locals.error = req.app.get('env') === 'development' ? error : {};
 
-        res.status(err.statusCode || 500).json(err);
+        if (error instanceof InternalError || error.statusCode === 500) {
+            console.error(error);
+        }
+
+        res.status(error.statusCode || 500).json(error);
     });
 };

@@ -1,8 +1,10 @@
-module.exports = function NotFound(message, errorCode) {
-    Error.captureStackTrace(this, this.constructor);
+module.exports = class NotFound extends Error {
+    constructor(message, ...args) {
+        super(message, ...args);
 
-    this.name = this.constructor.name;
-    this.message = message || 'The requested resource couldn\'t be found';
-    this.statusCode = 404;
-    this.errorCode = errorCode || 404;
+        this.name = this.constructor.name;
+        this.message = message || 'The requested resource couldn\'t be found';
+        this.statusCode = 404;
+        this.errorCode = 404;
+    }
 };
