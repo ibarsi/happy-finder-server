@@ -2,9 +2,16 @@ const Establishment = require('./establishments.model');
 const { InternalError } = require('../../errors');
 
 exports.index = async (req, res, next) => {
-    try {
-        let query = {};
+    const projection = {
+        $project: {
+            name: 1,
+            type: 1,
+            distance: 1
+        }
+    };
+    let query = {};
 
+    try {
         if (req.query.lat && req.query.lng) {
             query = {
                 $geoNear: {
@@ -19,13 +26,7 @@ exports.index = async (req, res, next) => {
 
         const aggregateQuery = [
             query,
-            {
-                $project: {
-                    name: 1,
-                    type: 1,
-                    distance: 1
-                }
-            }
+            projection
         ];
 
         const establishments = await Establishment.collection.aggregate(aggregateQuery).get();
