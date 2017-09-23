@@ -1,5 +1,5 @@
 module.exports = class InternalError extends Error {
-    constructor(exception, ...args) {
+    constructor (exception, ...args) {
         super(...args);
 
         const isMessage = typeof exception === 'string';

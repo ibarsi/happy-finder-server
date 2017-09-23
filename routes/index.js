@@ -2,6 +2,7 @@ const { NotFound, InternalError } = require('../errors');
 
 module.exports = app => {
     app.use('/api/establishments', require('../api/establishments'));
+    app.use('/api/places', require('../api/places'));
 
     app.use((req, res, next) => next(new NotFound()));
 

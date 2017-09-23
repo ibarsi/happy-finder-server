@@ -1,6 +1,6 @@
 module.exports = class NotFound extends Error {
-    constructor(message, ...args) {
-        super(message, ...args);
+    constructor (message, ...args) {
+        super(...args);
 
         this.name = this.constructor.name;
         this.message = message || 'The requested resource couldn\'t be found';
