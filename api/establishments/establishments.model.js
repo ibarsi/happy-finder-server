@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 const DealSchema = require('./deal.schema');
 
 const ESTABLISHMENT_TYPES = {
-    RESTOURANT: 'restourant',
+    RESTAURANT: 'restaurant',
     BAR: 'bar'
 };
 

@@ -6,7 +6,8 @@ exports.index = async (req, res, next) => {
         $project: {
             name: 1,
             type: 1,
-            distance: 1
+            distance: 1,
+            deals: 1
         }
     };
 
