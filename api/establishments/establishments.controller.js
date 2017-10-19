@@ -34,7 +34,7 @@ exports.index = async (req, res, next) => {
 
         aggregateQuery.push(projection);
 
-        const establishments = await Establishment.collection.aggregate(aggregateQuery).get();
+        const establishments = await Establishment.aggregate(aggregateQuery).exec();
 
         res.json(establishments);
     } catch (error) {
