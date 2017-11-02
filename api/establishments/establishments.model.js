@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const DealSchema = require('./deal.schema');
+const AddressSchema = require('../suggestions/address.schema');
 
 const ESTABLISHMENT_TYPES = {
     RESTAURANT: 'restaurant',
@@ -9,16 +10,9 @@ const ESTABLISHMENT_TYPES = {
 };
 
 const EstablishmentSchema = new Schema({
-    name: String,
-    type: { type: String, enum: Object.values(ESTABLISHMENT_TYPES) },
-    address: {
-        coords: {
-            type: { type: String, default: 'Point' },
-            coordinates: [ Number ]
-        },
-        formatted: String,
-        google: Schema.Types.Mixed
-    },
+    name: { type: String, required: true },
+    type: { type: String, enum: Object.values(ESTABLISHMENT_TYPES), required: true },
+    address: AddressSchema,
     deals: [ DealSchema ]
 });
 

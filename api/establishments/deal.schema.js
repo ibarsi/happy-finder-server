@@ -7,14 +7,14 @@ const ITEM_TYPES = {
 };
 
 const DealSchema = new Schema({
-    price: { type: Number, min: 0 }, // Dollars
+    price: { type: Number, min: 0, required: true }, // Dollars
     description: String,
     startTime: String, // 4:00PM
     endTime: String, // 6:00PM
     items: [
         {
             type: { type: String, enum: Object.values(ITEM_TYPES) },
-            name: String
+            name: { type: String, required: true }
         }
     ]
 });
