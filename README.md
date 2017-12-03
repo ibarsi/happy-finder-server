@@ -1,10 +1,10 @@
 # DISCONTINUED
 
-I decided to stop development once @QuantumMob shipped thier excellent [Dealmap](https://dealmap.io/) app first ☺️
+I decided to stop development once [Quantum Mob](https://github.com/QuantumMob) shipped thier excellent [Dealmap](https://dealmap.io/) app first ☺️
 
 # Happy Finder Server
 
-Happy Finder Server is the backend server that supports the [Happy Finder]() mobile app. The server is a Node backend that exposes APIs that read and store data to/from a Mongo database. The server has the following endpoints:
+Happy Finder Server is the backend server that supports the [Happy Finder](https://github.com/ibarsi/happy-finder) mobile app. The server is a Node backend that exposes APIs that read and store data to/from a Mongo database. The server has the following endpoints:
 
 ### Establishments
 
